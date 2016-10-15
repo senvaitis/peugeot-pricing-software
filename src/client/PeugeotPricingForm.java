@@ -1,6 +1,9 @@
 package client;
 
 import strategy.*;
+import strategy.Car;
+import template.car.*;
+import template.car.Car;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,7 +24,7 @@ public class PeugeotPricingForm extends JFrame {
     private JTextPane textPane1;
     private JCheckBox checkBox1;
     private JCheckBox checkBox2;
-    private JButton searchButton;
+    private JButton searchStrategyButton;
     private JTextPane textPane2;
     private JTextPane textPane3;
     private JButton carsButton;
@@ -29,12 +32,20 @@ public class PeugeotPricingForm extends JFrame {
     private JCheckBox checkBox3;
     private JTextPane textPane4;
     private JTextPane textPane5;
+    private JButton strategyButton;
+    private JButton templateButton;
+    private JButton strategyPatternButton;
+    private JButton templatePatternButton;
 
-    private Car car = new Car("RCZ", 20000);
-    private Motorcycle moto = new Motorcycle("Speedfight", 2900);
+    private strategy.Car carS = new strategy.Car("RCZ", 20000);
+    private strategy.Motorcycle motoS = new strategy.Motorcycle("Speedfight", 2900);
+    private template.car.Car carT;
+    private template.moto.Motorcycle motoT;
+
     private static JButton selectedCategoryButton;
     private static JButton selectedLineButton;
     private static JButton selectedPaymentButton;
+    private static JButton selectedPatternButton;
 
     public PeugeotPricingForm() {
         super("Peugeot Pricing Software");
@@ -46,6 +57,23 @@ public class PeugeotPricingForm extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
 
+        strategyPatternButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                selectedPatternButton = strategyPatternButton;
+                templatePatternButton.setBackground(iniColor);
+                strategyPatternButton.setBackground(Color.CYAN);
+            }
+        });
+
+        templatePatternButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                selectedPatternButton = templatePatternButton;
+                strategyPatternButton.setBackground(iniColor);
+                templatePatternButton.setBackground(Color.CYAN);
+            }
+        });
 
         carsButton.addActionListener(new ActionListener() {
             @Override
@@ -128,7 +156,7 @@ public class PeugeotPricingForm extends JFrame {
             }
         });
 
-        searchButton.addActionListener(new ActionListener() {
+        searchStrategyButton.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -136,35 +164,74 @@ public class PeugeotPricingForm extends JFrame {
                     case "Cars":
                         switch (selectedLineButton.getText()) {
                             case "Baseline":
-                                car.powerPolitics = new Baseline(car.getBasePrice());
                                 switch (selectedPaymentButton.getText()) {
                                     case "Single Payment":
-                                        car.paymentPolitics = new SinglePayment(car.getBasePrice(), car.powerPolitics.getLinePrice());
+                                        switch (selectedPatternButton.getText()) {
+                                            case "Strategy":
+                                                carS.setPowerPolitics(new Baseline());
+                                                carS.setPaymentPolitics(new SinglePayment());
+                                                break;
+                                            case "Template":
+                                                carT = new CarBaselineSinglePayment();
+                                        }
                                         break;
                                     case "Instalments":
-                                        car.paymentPolitics = new Instalments(car.getBasePrice(), car.powerPolitics.getLinePrice());
+                                        switch (selectedPatternButton.getText()) {
+                                            case "Strategy":
+                                                carS.setPowerPolitics(new Baseline());
+                                                carS.setPaymentPolitics(new Instalments());
+                                                break;
+                                            case "Template":
+                                                carT = new CarBaselineInstalments();
+                                        }
                                         break;
                                 }
                                 break;
                             case "Sportline":
-                                car.powerPolitics = new Sportline(car.getBasePrice());
                                 switch (selectedPaymentButton.getText()) {
                                     case "Single Payment":
-                                        car.paymentPolitics = new SinglePayment(car.getBasePrice(), car.powerPolitics.getLinePrice());
-                                        break;
+                                    switch (selectedPatternButton.getText()) {
+                                        case "Strategy":
+                                            carS.setPowerPolitics(new Sportline());
+                                            carS.setPaymentPolitics(new SinglePayment());
+                                            break;
+                                        case "Template":
+                                            carT = new CarBaselineSinglePayment();
+                                    }
+                                    break;
                                     case "Instalments":
-                                        car.paymentPolitics = new Instalments(car.getBasePrice(), car.powerPolitics.getLinePrice());
+                                        switch (selectedPatternButton.getText()) {
+                                            case "Strategy":
+                                                carS.setPowerPolitics(new Sportline());
+                                                carS.setPaymentPolitics(new Instalments());
+                                                break;
+                                            case "Template":
+                                                carT = new CarSportlineInstalments();
+                                        }
                                         break;
                                 }
                                 break;
                             case "Racingline":
-                                car.powerPolitics = new Racingline(car.getBasePrice());
                                 switch (selectedPaymentButton.getText()) {
                                     case "Single Payment":
-                                        car.paymentPolitics = new SinglePayment(car.getBasePrice(), car.powerPolitics.getLinePrice());
+                                        switch (selectedPatternButton.getText()) {
+                                            case "Strategy":
+                                                carS.setPowerPolitics(new Racingline());
+                                                carS.setPaymentPolitics(new SinglePayment());
+                                                break;
+                                            case "Template":
+                                                carT = new CarRacinglineSinglePayment();
+                                        }
                                         break;
                                     case "Instalments":
-                                        car.paymentPolitics = new Instalments(car.getBasePrice(), car.powerPolitics.getLinePrice());
+                                        switch (selectedPatternButton.getText()) {
+                                            case "Strategy":
+                                                carS.setPowerPolitics(new Racingline());
+                                                carS.setPaymentPolitics(new Instalments());
+                                                break;
+                                            case "Template":
+                                                carT = new CarRacinglineInstalments();
+                                        }
                                         break;
                                 }
                                 break;
@@ -173,10 +240,8 @@ public class PeugeotPricingForm extends JFrame {
                     case "Motorcycles":
                         switch (selectedPaymentButton.getText()) {
                             case "Single Payment":
-                                moto.paymentPolitics = new SinglePayment(moto.getBasePrice(), 0);
                                 break;
                             case "Instalments":
-                                moto.paymentPolitics = new Instalments(moto.getBasePrice(), 0);
                                 break;
                         }
                 }
@@ -193,14 +258,14 @@ public class PeugeotPricingForm extends JFrame {
 
 
         }
-    private void fillFormCars() {
+    private <C> void fillFormCars(C car) {
         textPane3.setText("Peugeot " + car.getModel());
         textPane1.setText(car.getBrochure());
-        textPane5.setText("Power specifications: " + car.powerPolitics.getPower() + " kW; " + car.powerPolitics.getTorque() + " Nm.");
-        textPane2.setText("Total price: " + car.paymentPolitics.getTotalPrice());
-        textPane4.setText("Total price breakdown: " + car.paymentPolitics.getPriceBreakdown());
+//        textPane5.setText("Power specifications: " + car.powerPolitics.getPower() + " kW; " + car.powerPolitics.getTorque() + " Nm.");
+//        textPane2.setText("Total price: " + car.paymentPolitics.getTotalPrice());
+//        textPane4.setText("Total price breakdown: " + car.paymentPolitics.getPriceBreakdown());
     }
-    private void fillFormMotorcycles() {
+    private <M> void fillFormMotorcycles(M moto) {
         textPane3.setText("Peugeot " + moto.getModel());
         textPane1.setText(moto.getBrochure());
         textPane2.setText("Total price: " + moto.paymentPolitics.getTotalPrice());

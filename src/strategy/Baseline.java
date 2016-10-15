@@ -4,12 +4,11 @@ package strategy;
  * Created by kazim on 2016-10-06.
  */
 public class Baseline implements PowerPolitics {
-    private int basePrice;
     private int power = 115; // measured in kW
     private int torque = 240; // measured in Nm
 
     public Baseline(int basePrice) {
-        this.basePrice = basePrice;
+
     }
 
     @Override
@@ -28,7 +27,7 @@ public class Baseline implements PowerPolitics {
     }
 
     @Override
-    public int getLinePrice() {
+    public int getLinePrice(int basePrice) {
         return 0;
     }
 }

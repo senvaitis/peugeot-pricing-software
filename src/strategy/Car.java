@@ -6,13 +6,20 @@ package strategy;
 public class Car {
     private String model;
     private int basePrice;
-    public PowerPolitics powerPolitics;
-    public PaymentPolitics paymentPolitics;
-
+    private PowerPolitics powerPolitics;
+    private PaymentPolitics paymentPolitics;
 
     public Car(String model, int basePrice) {
         this.model = model;
         this.basePrice = basePrice;
+    }
+
+    public void setPowerPolitics(PowerPolitics powerPolitics) {
+        this.powerPolitics = powerPolitics;
+    }
+
+    public void setPaymentPolitics(PaymentPolitics paymentPolitics) {
+        this.paymentPolitics = paymentPolitics;
     }
 
     public String getModel() {
