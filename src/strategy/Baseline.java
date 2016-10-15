@@ -1,33 +1,38 @@
 package strategy;
 
+import utilities.BaselineUtil;
+
 /**
  * Created by kazim on 2016-10-06.
  */
 public class Baseline implements PowerPolitics {
     private int power = 115; // measured in kW
     private int torque = 240; // measured in Nm
+    private int linePrice;
 
-    public Baseline(int basePrice) {
+    private BaselineUtil baselineUtil;
 
+    public Baseline() {
+        baselineUtil = new BaselineUtil(power, torque);
     }
 
     @Override
     public int getPower() {
-        return this.power;
+        return baselineUtil.getPower();
     }
 
     @Override
     public int getTorque() {
-        return this.torque;
+        return baselineUtil.getTorque();
     }
 
     @Override
     public String getPowerBrochure() {
-        return "This sweet 1.6 petrol engine gives everything a daily car user could want!";
+        return baselineUtil.getPowerBrochure();
     }
 
     @Override
     public int getLinePrice(int basePrice) {
-        return 0;
+        return baselineUtil.getLinePrice(basePrice);
     }
 }

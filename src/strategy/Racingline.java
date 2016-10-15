@@ -8,8 +8,8 @@ public class Racingline implements PowerPolitics {
     private int power = 199; // measured in kW
     private int torque = 330; // measured in Nm
 
-    public Racingline(int basePrice) {
-        this.basePrice = basePrice;
+    public Racingline() {
+
     }
 
     @Override
@@ -28,7 +28,8 @@ public class Racingline implements PowerPolitics {
     }
 
     @Override
-    public int getLinePrice() {
+    public int getLinePrice(int basePrice) {
+        this.basePrice = basePrice;
         return this.basePrice / 2;
     }
 }

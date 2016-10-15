@@ -1,5 +1,7 @@
 package strategy;
 
+import utilities.SportlineUtil;
+
 /**
  * Created by kazim on 2016-10-06.
  */
@@ -7,28 +9,29 @@ public class Sportline implements PowerPolitics {
     private int basePrice;
     private int power = 147; // measured in kW
     private int torque = 275; // measured in Nm
+    private SportlineUtil sportlineUtil;
 
-    public Sportline(int basePrice) {
-        this.basePrice = basePrice;
+    public Sportline() {
+        sportlineUtil = new SportlineUtil(power, torque);
     }
 
     @Override
     public int getPower() {
-        return this.power;
+        return sportlineUtil.getPower();
     }
 
     @Override
     public int getTorque() {
-        return this.torque;
+        return sportlineUtil.getTorque();
     }
 
     @Override
     public String getPowerBrochure() {
-        return "This is the medium between baseline and racingline.";
+        return sportlineUtil.getPowerBrochure();
     }
 
     @Override
-    public int getLinePrice() {
-        return this.basePrice / 4;
+    public int getLinePrice(int basePrice) {
+        return sportlineUtil.getLinePrice(basePrice);
     }
 }

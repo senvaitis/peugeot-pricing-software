@@ -1,9 +1,8 @@
 package client;
 
 import strategy.*;
-import strategy.Car;
 import template.car.*;
-import template.car.Car;
+import template.moto.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -34,8 +33,7 @@ public class PeugeotPricingForm extends JFrame {
     private JTextPane textPane5;
     private JButton strategyButton;
     private JButton templateButton;
-    private JButton strategyPatternButton;
-    private JButton templatePatternButton;
+    private JButton searchButton;
 
     private strategy.Car carS = new strategy.Car("RCZ", 20000);
     private strategy.Motorcycle motoS = new strategy.Motorcycle("Speedfight", 2900);
@@ -57,21 +55,21 @@ public class PeugeotPricingForm extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
 
-        strategyPatternButton.addActionListener(new ActionListener() {
+        strategyButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                selectedPatternButton = strategyPatternButton;
-                templatePatternButton.setBackground(iniColor);
-                strategyPatternButton.setBackground(Color.CYAN);
+                selectedPatternButton = strategyButton;
+                templateButton.setBackground(iniColor);
+                strategyButton.setBackground(Color.CYAN);
             }
         });
 
-        templatePatternButton.addActionListener(new ActionListener() {
+        templateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                selectedPatternButton = templatePatternButton;
-                strategyPatternButton.setBackground(iniColor);
-                templatePatternButton.setBackground(Color.CYAN);
+                selectedPatternButton = templateButton;
+                strategyButton.setBackground(iniColor);
+                templateButton.setBackground(Color.CYAN);
             }
         });
 
@@ -156,7 +154,7 @@ public class PeugeotPricingForm extends JFrame {
             }
         });
 
-        searchStrategyButton.addActionListener(new ActionListener() {
+        searchButton.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -172,7 +170,7 @@ public class PeugeotPricingForm extends JFrame {
                                                 carS.setPaymentPolitics(new SinglePayment());
                                                 break;
                                             case "Template":
-                                                carT = new CarBaselineSinglePayment();
+                                                carT = new CarBaselineSinglePayment("RCZ", 20000);
                                         }
                                         break;
                                     case "Instalments":
@@ -182,7 +180,7 @@ public class PeugeotPricingForm extends JFrame {
                                                 carS.setPaymentPolitics(new Instalments());
                                                 break;
                                             case "Template":
-                                                carT = new CarBaselineInstalments();
+                                                carT = new CarBaselineInstalments("RCZ", 20000);
                                         }
                                         break;
                                 }
@@ -196,7 +194,7 @@ public class PeugeotPricingForm extends JFrame {
                                             carS.setPaymentPolitics(new SinglePayment());
                                             break;
                                         case "Template":
-                                            carT = new CarBaselineSinglePayment();
+                                            carT = new CarBaselineSinglePayment("RCZ", 20000);
                                     }
                                     break;
                                     case "Instalments":
@@ -206,7 +204,7 @@ public class PeugeotPricingForm extends JFrame {
                                                 carS.setPaymentPolitics(new Instalments());
                                                 break;
                                             case "Template":
-                                                carT = new CarSportlineInstalments();
+                                                carT = new CarSportlineInstalments("RCZ", 20000);
                                         }
                                         break;
                                 }
@@ -220,7 +218,7 @@ public class PeugeotPricingForm extends JFrame {
                                                 carS.setPaymentPolitics(new SinglePayment());
                                                 break;
                                             case "Template":
-                                                carT = new CarRacinglineSinglePayment();
+                                                carT = new CarRacinglineSinglePayment("RCZ", 20000);
                                         }
                                         break;
                                     case "Instalments":
@@ -230,7 +228,7 @@ public class PeugeotPricingForm extends JFrame {
                                                 carS.setPaymentPolitics(new Instalments());
                                                 break;
                                             case "Template":
-                                                carT = new CarRacinglineInstalments();
+                                                carT = new CarRacinglineInstalments("RCZ", 20000);
                                         }
                                         break;
                                 }
@@ -247,10 +245,24 @@ public class PeugeotPricingForm extends JFrame {
                 }
                 switch (selectedCategoryButton.getText()) {
                     case "Cars":
-                        fillFormCars();
+                        switch (selectedPatternButton.getText()) {
+                            case "Strategy":
+                                fillFormCarsStrategy(carS);
+                                break;
+                            case "Template":
+                                fillFormCarsTemplate(carT);
+                                break;
+                        }
                         break;
                     case "Motorcycles":
-                        fillFormMotorcycles();
+                        switch (selectedPatternButton.getText()) {
+                            case "Strategy":
+                                fillFormMotorcyclesStrategy(motoS);
+                                break;
+                            case "Template":
+                                fillFormMotorcyclesTemplate(motoT);
+                                break;
+                        }
                         break;
                 }
             }
@@ -258,17 +270,31 @@ public class PeugeotPricingForm extends JFrame {
 
 
         }
-    private <C> void fillFormCars(C car) {
-        textPane3.setText("Peugeot " + car.getModel());
-        textPane1.setText(car.getBrochure());
+    private void fillFormCarsStrategy(strategy.Car carS) {
+        textPane3.setText("Peugeot " + carS.getModel());
+        textPane1.setText(carS.getBrochure());
 //        textPane5.setText("Power specifications: " + car.powerPolitics.getPower() + " kW; " + car.powerPolitics.getTorque() + " Nm.");
 //        textPane2.setText("Total price: " + car.paymentPolitics.getTotalPrice());
 //        textPane4.setText("Total price breakdown: " + car.paymentPolitics.getPriceBreakdown());
     }
-    private <M> void fillFormMotorcycles(M moto) {
-        textPane3.setText("Peugeot " + moto.getModel());
-        textPane1.setText(moto.getBrochure());
-        textPane2.setText("Total price: " + moto.paymentPolitics.getTotalPrice());
-        textPane4.setText("Total price breakdown: " + moto.paymentPolitics.getPriceBreakdown());
+    private void fillFormMotorcyclesStrategy(strategy.Motorcycle motoS) {
+        textPane3.setText("Peugeot " + motoS.getModel());
+        textPane1.setText(motoS.getBrochure());
+        textPane2.setText("Total price: " );
+        textPane4.setText("Total price breakdown: ");
+    }
+
+    private void fillFormCarsTemplate(template.car.Car carT) {
+        textPane3.setText("Peugeot " + carT.getModel());
+        textPane1.setText(carT.getBrochure());
+//        textPane5.setText("Power specifications: " + car.powerPolitics.getPower() + " kW; " + car.powerPolitics.getTorque() + " Nm.");
+//        textPane2.setText("Total price: " + car.paymentPolitics.getTotalPrice());
+//        textPane4.setText("Total price breakdown: " + car.paymentPolitics.getPriceBreakdown());
+    }
+    private void fillFormMotorcyclesTemplate(template.moto.Motorcycle motoT) {
+        textPane3.setText("Peugeot " + motoT.getModel());
+        textPane1.setText(motoT.getBrochure());
+        textPane2.setText("Total price: ");
+        textPane4.setText("Total price breakdown: ");
     }
 }

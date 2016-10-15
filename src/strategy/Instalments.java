@@ -1,5 +1,7 @@
 package strategy;
 
+import utilities.InstalmentsUtil;
+
 /**
  * Created by kazim on 2016-10-12.
  */
@@ -7,24 +9,26 @@ public class Instalments implements PaymentPolitics {
     private int instalmentsTax = 10; // measured in %
     private int basePrice;
     private int linePrice;
+    private InstalmentsUtil instalmentsUtil;
 
-    public Instalments(int basePrice, int linePrice) {
-        this.basePrice = basePrice;
-        this.linePrice = linePrice;
+    public Instalments() {
+//        this.basePrice = basePrice;
+//        this.linePrice = linePrice;
+        instalmentsUtil = new InstalmentsUtil(linePrice, basePrice, instalmentsTax);
     }
 
     @Override
     public int getTotalPrice() {
-        return (int) (this.basePrice * ((instalmentsTax/100.0) + 1) + this.linePrice);
+        return instalmentsUtil.getTotalPrice();
     }
 
     @Override
     public String getPriceBrochure() {
-        return "You may pick the best instalments plan for you. Paying by instalments is just 10%.";
+        return instalmentsUtil.getPriceBrochure();
     }
 
     @Override
     public String getPriceBreakdown() {
-        return "Base price: " + this.basePrice + "; Line price: " + this.linePrice + "; Instalments tax: " + instalmentsTax + "%.";
+            return instalmentsUtil.getPriceBreakdown(basePrice, linePrice, instalmentsTax);
     }
 }

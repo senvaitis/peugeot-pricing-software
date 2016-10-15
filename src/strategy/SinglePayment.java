@@ -7,9 +7,9 @@ public class SinglePayment implements PaymentPolitics {
     private int basePrice;
     private int linePrice;
 
-    public SinglePayment(int basePrice, int linePrice) {
-        this.basePrice = basePrice;
-        this.linePrice = linePrice;
+    public SinglePayment() {
+//        this.basePrice = basePrice;
+//        this.linePrice = linePrice;
     }
     @Override
     public int getTotalPrice() {

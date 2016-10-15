@@ -1,5 +1,9 @@
 package template.car;
 
+import strategy.SinglePayment;
+import utilities.SinglePaymentUtil;
+import utilities.SportlineUtil;
+
 /**
  * Created by kazim on 2016-10-06.
  */
@@ -9,43 +13,47 @@ public class CarSportlineSinglePayment extends Car {
     private int power = 147; // measured in kW
     private int torque = 275; // measured in Nm
     private int linePrice;
+    private SportlineUtil sportlineUtil;
+    private SinglePaymentUtil singlePaymentUtil;
 
     public CarSportlineSinglePayment(String model, int basePrice) {
         super(model, basePrice);
         this.basePrice = basePrice;
         this.linePrice = basePrice / 4;
+        sportlineUtil = new SportlineUtil(power, torque);
+        singlePaymentUtil = new SinglePaymentUtil();
     }
 
     protected String getPowerBrochure() {
-        return "This is the medium between baseline and racingline.";
+        return sportlineUtil.getPowerBrochure();
     }
 
     protected String getPriceBrochure() {
-        return "Pay once. Drive.";
+        return singlePaymentUtil.getPriceBrochure();
     }
 
     @Override
     protected String getPriceBreakdown() {
-        return "Base price: " + this.basePrice + "; Line price: " + this.linePrice + ".";
+        return singlePaymentUtil.getPriceBreakdown(basePrice, linePrice);
     }
 
     @Override
     protected int getPower() {
-        return this.power;
+        return sportlineUtil.getPower();
     }
 
     @Override
     protected int getTorque() {
-        return this.torque;
+        return sportlineUtil.getTorque();
     }
 
     @Override
     protected int getLinePrice() {
-        return this.linePrice;
+        return sportlineUtil.getLinePrice(basePrice);
     }
 
     @Override
     protected int getTotalPrice() {
-        return this.basePrice + this.linePrice;
+        return singlePaymentUtil.getTotalPrice();
     }
 }
