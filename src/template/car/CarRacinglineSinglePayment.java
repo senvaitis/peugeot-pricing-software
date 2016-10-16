@@ -1,5 +1,9 @@
 package template.car;
 
+import utilities.LinePriceUtil;
+import utilities.RacinglineUtil;
+import utilities.SinglePaymentUtil;
+
 /**
  * Created by kazim on 2016-10-06.
  */
@@ -8,44 +12,45 @@ public class CarRacinglineSinglePayment extends Car {
     private int power = 199; // measured in kW
     private int torque = 330; // measured in Nm
     private int linePrice;
+    private RacinglineUtil racinglineUtil;
+    private SinglePaymentUtil singlePaymentUtil;
 
     public CarRacinglineSinglePayment(String model, int basePrice) {
         super(model, basePrice);
         this.basePrice = basePrice;
-        this.linePrice = basePrice / 2;
+        this.linePrice = LinePriceUtil.getLinePrice(basePrice, "Racingline");
+
+        racinglineUtil = new RacinglineUtil(power, torque);
+        singlePaymentUtil = new SinglePaymentUtil(this.basePrice, this.linePrice);
     }
 
+    @Override
     protected String getPowerBrochure() {
-        return "Racingline is made by Peugeot Racing engineers. " +
-                "These are the same people who made a car for Dakar 2015. ";
+        return racinglineUtil.getPowerBrochure();
     }
 
+    @Override
     protected String getPriceBrochure() {
-        return "Pay once. Drive.";
+        return singlePaymentUtil.getPriceBrochure();
     }
 
     @Override
     protected String getPriceBreakdown() {
-        return "Base price: " + this.basePrice + "; Line price: " + this.linePrice + ".";
+        return singlePaymentUtil.getPriceBreakdown();
     }
 
     @Override
     protected int getPower() {
-        return this.power;
+        return racinglineUtil.getPower();
     }
 
     @Override
     protected int getTorque() {
-        return this.torque;
-    }
-
-    @Override
-    protected int getLinePrice() {
-        return this.linePrice;
+        return racinglineUtil.getTorque();
     }
 
     @Override
     protected int getTotalPrice() {
-        return this.basePrice + this.linePrice;
+        return singlePaymentUtil.getTotalPrice();
     }
 }

@@ -15,15 +15,19 @@ public abstract class Motorcycle {
     public String getModel() {
         return model;
     }
-    public int getBasePrice() { return basePrice; }
 
-
-
-    public String getBrochure() {
-        return "\n" + this.getPriceBrochure();
+    public int getBasePrice() {
+        return basePrice;
     }
 
+    public String getPricing() {
 
+        return String.format("Total price: %1$d. \nBreakdown: %2$s", this.getTotalPrice(), this.getPriceBreakdown());
+    }
+
+    public String getBrochure() {
+        return this.getPriceBrochure();
+    }
 
     protected abstract int getTotalPrice();
     protected abstract String getPriceBrochure();

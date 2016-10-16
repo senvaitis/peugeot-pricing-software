@@ -24,7 +24,7 @@ public class SinglePaymentUtil {
         return "Pay once. Drive.";
     }
 
-    public String getPriceBreakdown(int basePrice, int linePrice) {
+    public String getPriceBreakdown() {
         return "Base price: " + basePrice + "; Line price: " + linePrice + ".";
     }
 

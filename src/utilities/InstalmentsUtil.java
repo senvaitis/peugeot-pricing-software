@@ -5,10 +5,11 @@ package utilities;
  */
 public class InstalmentsUtil {
     private int linePrice;
-    private int basePrice = 0;
+    private int basePrice;
     private int instalmentsTax;
 
     public InstalmentsUtil(int basePrice, int instalmentsTax) {
+        this.linePrice = 0;
         this.basePrice = basePrice;
         this.instalmentsTax = instalmentsTax;
     }
@@ -23,7 +24,7 @@ public class InstalmentsUtil {
         return "You may pick the best instalments plan for you. Paying by instalments is just 10%.";
     }
 
-    public String getPriceBreakdown(int basePrice, int linePrice, int instalmentsTax) {
+    public String getPriceBreakdown() {
         return "Base price: " + basePrice + "; Line price: " + linePrice + "; Instalments tax: " + instalmentsTax + "%.";
     }
 

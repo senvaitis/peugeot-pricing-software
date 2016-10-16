@@ -1,6 +1,7 @@
 package template.car;
 
 import strategy.SinglePayment;
+import utilities.LinePriceUtil;
 import utilities.SinglePaymentUtil;
 import utilities.SportlineUtil;
 
@@ -19,22 +20,25 @@ public class CarSportlineSinglePayment extends Car {
     public CarSportlineSinglePayment(String model, int basePrice) {
         super(model, basePrice);
         this.basePrice = basePrice;
-        this.linePrice = basePrice / 4;
+        this.linePrice = LinePriceUtil.getLinePrice(basePrice, "Sportline");
+
         sportlineUtil = new SportlineUtil(power, torque);
-        singlePaymentUtil = new SinglePaymentUtil(basePrice, linePrice);
+        singlePaymentUtil = new SinglePaymentUtil(this.basePrice, this.linePrice);
     }
 
+    @Override
     protected String getPowerBrochure() {
         return sportlineUtil.getPowerBrochure();
     }
 
+    @Override
     protected String getPriceBrochure() {
         return singlePaymentUtil.getPriceBrochure();
     }
 
     @Override
     protected String getPriceBreakdown() {
-        return singlePaymentUtil.getPriceBreakdown(basePrice, linePrice);
+        return singlePaymentUtil.getPriceBreakdown();
     }
 
     @Override
@@ -45,11 +49,6 @@ public class CarSportlineSinglePayment extends Car {
     @Override
     protected int getTorque() {
         return sportlineUtil.getTorque();
-    }
-
-    @Override
-    protected int getLinePrice() {
-        return sportlineUtil.getLinePrice(basePrice);
     }
 
     @Override

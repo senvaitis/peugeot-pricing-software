@@ -1,5 +1,9 @@
 package template.car;
 
+import utilities.BaselineUtil;
+import utilities.LinePriceUtil;
+import utilities.SinglePaymentUtil;
+
 /**
  * Created by kazim on 2016-10-06.
  */
@@ -8,43 +12,45 @@ public class CarBaselineSinglePayment extends Car {
     private int power = 115; // measured in kW
     private int torque = 240; // measured in Nm
     private int linePrice;
+    private BaselineUtil baselineUtil;
+    private SinglePaymentUtil singlePaymentUtil;
 
     public CarBaselineSinglePayment(String model, int basePrice) {
         super(model, basePrice);
         this.basePrice = basePrice;
-        this.linePrice = 0;
+        this.linePrice = LinePriceUtil.getLinePrice(basePrice, "Baseline");
+
+        baselineUtil = new BaselineUtil(power, torque);
+        singlePaymentUtil = new SinglePaymentUtil(basePrice);
     }
 
+    @Override
     protected String getPowerBrochure() {
-        return "This sweet 1.6 petrol engine gives everything a daily car user could want!";
+        return baselineUtil.getPowerBrochure();
     }
 
+    @Override
     protected String getPriceBrochure() {
-        return "Pay once. Drive.";
+        return singlePaymentUtil.getPriceBrochure();
     }
 
     @Override
     protected String getPriceBreakdown() {
-        return "Base price: " + this.basePrice + "; Line price: " + this.getLinePrice() + ".";
+        return singlePaymentUtil.getPriceBreakdown();
     }
 
     @Override
     protected int getPower() {
-        return this.power;
+        return baselineUtil.getPower();
     }
 
     @Override
     protected int getTorque() {
-        return this.torque;
-    }
-
-    @Override
-    protected int getLinePrice() {
-        return linePrice;
+        return baselineUtil.getTorque();
     }
 
     @Override
     protected int getTotalPrice() {
-        return this.basePrice + this.linePrice;
+        return singlePaymentUtil.getTotalPrice();
     }
 }

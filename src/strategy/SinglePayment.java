@@ -36,6 +36,6 @@ public class SinglePayment implements PaymentPolitics {
 
     @Override
     public String getPriceBreakdown() {
-        return singlePaymentUtil.getPriceBreakdown(basePrice, linePrice);
+        return singlePaymentUtil.getPriceBreakdown();
     }
 }

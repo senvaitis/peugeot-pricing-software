@@ -9,16 +9,18 @@ import utilities.LinePriceUtil;
 public class Instalments implements PaymentPolitics {
     private int instalmentsTax = 10; // measured in %
     private int basePrice;
-    private int linePrice;
+    private int linePrice = 0;
     private InstalmentsUtil instalmentsUtil;
 
 
 
     public Instalments(int basePrice) {
+        this.basePrice = basePrice;
         instalmentsUtil = new InstalmentsUtil(basePrice, instalmentsTax);
     }
 
     public Instalments(int basePrice, String line) {
+        this.basePrice = basePrice;
         instalmentsUtil = new InstalmentsUtil(basePrice, LinePriceUtil.getLinePrice(basePrice, line), instalmentsTax);
     }
 
@@ -34,6 +36,6 @@ public class Instalments implements PaymentPolitics {
 
     @Override
     public String getPriceBreakdown() {
-            return instalmentsUtil.getPriceBreakdown(basePrice, linePrice, instalmentsTax);
+            return instalmentsUtil.getPriceBreakdown();
     }
 }

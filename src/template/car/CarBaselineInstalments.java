@@ -1,5 +1,9 @@
 package template.car;
 
+import utilities.BaselineUtil;
+import utilities.InstalmentsUtil;
+import utilities.LinePriceUtil;
+
 /**
  * Created by kazim on 2016-10-11.
  */
@@ -9,45 +13,45 @@ public class CarBaselineInstalments extends Car {
     private int power = 115; // measured in kW
     private int torque = 240; // measured in Nm
     private int linePrice;
+    private BaselineUtil baselineUtil;
+    private InstalmentsUtil instalmentsUtil;
 
     public CarBaselineInstalments(String model, int basePrice) {
         super(model, basePrice);
         this.basePrice = basePrice;
-        this.linePrice = 0;
+        this.linePrice = LinePriceUtil.getLinePrice(basePrice, "Baseline");
+
+        baselineUtil = new BaselineUtil(power, torque);
+        instalmentsUtil = new InstalmentsUtil(basePrice, instalmentsTax);
     }
 
     @Override
     protected String getPowerBrochure() {
-        return "This sweet 1.6 petrol engine gives everything a daily car user could want!";
+        return baselineUtil.getPowerBrochure();
     }
 
     @Override
     protected String getPriceBrochure() {
-        return "You may pick the best instalments plan for you. Paying by instalments is just 10%.";
+        return instalmentsUtil.getPriceBrochure();
     }
 
     @Override
     protected String getPriceBreakdown() {
-        return "Base price: " + this.basePrice + "; Line price: " + linePrice + "; Instalments tax: " + instalmentsTax + "%.";
+        return instalmentsUtil.getPriceBreakdown();
     }
 
     @Override
     protected int getPower() {
-        return this.power;
+        return baselineUtil.getPower();
     }
 
     @Override
     protected int getTorque() {
-        return this.torque;
-    }
-
-    @Override
-    protected int getLinePrice() {
-        return this.linePrice;
+        return baselineUtil.getTorque();
     }
 
     @Override
     protected int getTotalPrice() {
-        return (int) ((this.basePrice + this.linePrice) * ((instalmentsTax/100.0) + 1));
+        return instalmentsUtil.getTotalPrice();
     }
 }
