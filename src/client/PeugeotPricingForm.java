@@ -290,8 +290,6 @@ public class PeugeotPricingForm extends JFrame {
                 }
             }
         });
-
-
         }
 
     private void fillFormCarsStrategy(strategy.Car carS) {
