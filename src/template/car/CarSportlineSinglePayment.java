@@ -21,7 +21,7 @@ public class CarSportlineSinglePayment extends Car {
         this.basePrice = basePrice;
         this.linePrice = basePrice / 4;
         sportlineUtil = new SportlineUtil(power, torque);
-        singlePaymentUtil = new SinglePaymentUtil();
+        singlePaymentUtil = new SinglePaymentUtil(basePrice, linePrice);
     }
 
     protected String getPowerBrochure() {

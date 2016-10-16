@@ -5,10 +5,15 @@ package utilities;
  */
 public class InstalmentsUtil {
     private int linePrice;
-    private int basePrice;
+    private int basePrice = 0;
     private int instalmentsTax;
 
-    public InstalmentsUtil(int linePrice, int basePrice, int instalmentsTax) {
+    public InstalmentsUtil(int basePrice, int instalmentsTax) {
+        this.basePrice = basePrice;
+        this.instalmentsTax = instalmentsTax;
+    }
+
+    public InstalmentsUtil(int basePrice, int linePrice, int instalmentsTax) {
         this.linePrice = linePrice;
         this.basePrice = basePrice;
         this.instalmentsTax = instalmentsTax;

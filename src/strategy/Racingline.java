@@ -1,35 +1,31 @@
 package strategy;
 
+import utilities.RacinglineUtil;
+
 /**
  * Created by kazim on 2016-10-06.
  */
 public class Racingline implements PowerPolitics {
-    private int basePrice;
     private int power = 199; // measured in kW
     private int torque = 330; // measured in Nm
+    private RacinglineUtil racinglineUtil;
 
     public Racingline() {
-
+        racinglineUtil = new RacinglineUtil(power, torque);
     }
 
     @Override
     public int getPower() {
-        return this.power;
+        return racinglineUtil.getPower();
     }
 
     @Override
     public int getTorque() {
-        return this.torque;
-    }
-    @Override
-    public String getPowerBrochure() {
-        return "Racingline is made by Peugeot Racing engineers. " +
-                "These are the same people who made a car for Dakar 2015. ";
+        return racinglineUtil.getTorque();
     }
 
     @Override
-    public int getLinePrice(int basePrice) {
-        this.basePrice = basePrice;
-        return this.basePrice / 2;
+    public String getPowerBrochure() {
+        return racinglineUtil.getPowerBrochure();
     }
 }

@@ -7,5 +7,4 @@ public interface PowerPolitics {
     public int getPower();
     public int getTorque();
     public String getPowerBrochure();
-    public int getLinePrice(int basePrice);
 }

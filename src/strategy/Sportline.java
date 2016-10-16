@@ -6,7 +6,6 @@ import utilities.SportlineUtil;
  * Created by kazim on 2016-10-06.
  */
 public class Sportline implements PowerPolitics {
-    private int basePrice;
     private int power = 147; // measured in kW
     private int torque = 275; // measured in Nm
     private SportlineUtil sportlineUtil;
@@ -28,10 +27,5 @@ public class Sportline implements PowerPolitics {
     @Override
     public String getPowerBrochure() {
         return sportlineUtil.getPowerBrochure();
-    }
-
-    @Override
-    public int getLinePrice(int basePrice) {
-        return sportlineUtil.getLinePrice(basePrice);
     }
 }

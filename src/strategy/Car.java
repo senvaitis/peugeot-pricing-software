@@ -25,12 +25,21 @@ public class Car {
     public String getModel() {
         return model;
     }
-    public int getBasePrice() { return basePrice; }
+
+    public int getBasePrice() {
+        return basePrice;
+    }
+
+    public String getSpecifications() {
+        return String.format("Power(kW): %1$d \nTorque(Nm): %2$d", powerPolitics.getPower(), powerPolitics.getTorque());
+    }
+
+    public String getPricing() {
+
+        return String.format("Total price: %1$d. \nBreakdown: %2$s", paymentPolitics.getTotalPrice(), paymentPolitics.getPriceBreakdown());
+    }
 
     public String getBrochure() {
         return powerPolitics.getPowerBrochure() + "\n" + paymentPolitics.getPriceBrochure();
     }
-
-
-
 }

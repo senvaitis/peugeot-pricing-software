@@ -8,8 +8,6 @@ import utilities.BaselineUtil;
 public class Baseline implements PowerPolitics {
     private int power = 115; // measured in kW
     private int torque = 240; // measured in Nm
-    private int linePrice;
-
     private BaselineUtil baselineUtil;
 
     public Baseline() {
@@ -29,10 +27,5 @@ public class Baseline implements PowerPolitics {
     @Override
     public String getPowerBrochure() {
         return baselineUtil.getPowerBrochure();
-    }
-
-    @Override
-    public int getLinePrice(int basePrice) {
-        return baselineUtil.getLinePrice(basePrice);
     }
 }

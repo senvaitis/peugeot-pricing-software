@@ -23,6 +23,8 @@ public abstract class Motorcycle {
         return "\n" + this.getPriceBrochure();
     }
 
+
+
     protected abstract int getTotalPrice();
     protected abstract String getPriceBrochure();
     protected abstract String getPriceBreakdown();

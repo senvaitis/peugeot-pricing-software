@@ -1,29 +1,41 @@
 package strategy;
 
+import utilities.LinePriceUtil;
+import utilities.SinglePaymentUtil;
+
 /**
  * Created by kazim on 2016-10-12.
  */
 public class SinglePayment implements PaymentPolitics {
     private int basePrice;
-    private int linePrice;
+    private int linePrice = 0;
+    private SinglePaymentUtil singlePaymentUtil;
 
-    public SinglePayment() {
-//        this.basePrice = basePrice;
-//        this.linePrice = linePrice;
+    public SinglePayment(int basePrice) {
+        this.basePrice = basePrice;
+        singlePaymentUtil = new SinglePaymentUtil(basePrice);
+
     }
+
+    public SinglePayment(int basePrice, String line) {
+        this.basePrice = basePrice;
+        linePrice = LinePriceUtil.getLinePrice(basePrice, line);
+        singlePaymentUtil = new SinglePaymentUtil(basePrice, linePrice);
+    }
+
+
     @Override
     public int getTotalPrice() {
-        return (int) (this.basePrice + this.linePrice * ((10/100) + 1));
+        return singlePaymentUtil.getTotalPrice();
     }
-
 
     @Override
     public String getPriceBrochure() {
-        return "Pay once. Drive.";
+        return singlePaymentUtil.getPriceBrochure();
     }
 
     @Override
     public String getPriceBreakdown() {
-        return "Base price: " + this.basePrice + "; Line price: " + this.linePrice + ".";
+        return singlePaymentUtil.getPriceBreakdown(basePrice, linePrice);
     }
 }

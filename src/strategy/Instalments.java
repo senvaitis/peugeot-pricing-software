@@ -1,6 +1,7 @@
 package strategy;
 
 import utilities.InstalmentsUtil;
+import utilities.LinePriceUtil;
 
 /**
  * Created by kazim on 2016-10-12.
@@ -11,10 +12,14 @@ public class Instalments implements PaymentPolitics {
     private int linePrice;
     private InstalmentsUtil instalmentsUtil;
 
-    public Instalments() {
-//        this.basePrice = basePrice;
-//        this.linePrice = linePrice;
-        instalmentsUtil = new InstalmentsUtil(linePrice, basePrice, instalmentsTax);
+
+
+    public Instalments(int basePrice) {
+        instalmentsUtil = new InstalmentsUtil(basePrice, instalmentsTax);
+    }
+
+    public Instalments(int basePrice, String line) {
+        instalmentsUtil = new InstalmentsUtil(basePrice, LinePriceUtil.getLinePrice(basePrice, line), instalmentsTax);
     }
 
     @Override
